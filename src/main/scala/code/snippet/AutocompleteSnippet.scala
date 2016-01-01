@@ -13,6 +13,7 @@ import net.liftweb.http.SHtml
 import net.liftweb.http.js.JE.JsRaw
 import net.liftweb.http.AjaxContext
 import code.lib.util.Languages
+import net.liftweb.http.S
 
 object AutocompleteSnippet {
 
@@ -41,7 +42,10 @@ object AutocompleteSnippet {
     // gets a Failure
     def doFind(param: String): JValue = {
       val words = Languages.l.filter(_.toLowerCase startsWith param.toLowerCase())
-      words.sorted
+      
+      val hostAndPath = S.hostAndPath
+      
+      words.map(w => {w + " (HnP: " + hostAndPath + ")"}).sorted
     }
 
     // Associate the server functions with client-side functions
